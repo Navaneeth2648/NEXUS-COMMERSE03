@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXUS — Future Commerce</title>
+  <link rel="stylesheet" href="style1.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body class="dark-mode">
+
+  <!-- ===== LOADING SCREEN ===== -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-logo">NEXUS</div>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+      <div class="loader-text">Initializing Future Commerce...</div>
+    </div>
+    <div class="loader-particles" id="loaderParticles"></div>
+  </div>
+
+  <!-- ===== CURSOR GLOW ===== -->
+  <div id="cursorGlow"></div>
+  <div id="cursorDot"></div>
+
+  <!-- ===== FLOATING PARTICLES BACKGROUND ===== -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- ===== PUSH NOTIFICATION CONTAINER ===== -->
+  <div id="pushNotifContainer" class="push-notif-container"></div>
+
+  <!-- ===== NOTIFICATION BELL (Upgraded) ===== -->
+  <div id="notifBell" class="notif-bell" title="Notifications">
+    <span class="bell-icon">🔔</span>
+    <span class="notif-count" id="notifCount">0</span>
+    <div class="notif-dropdown" id="notifDropdown">
+      <div class="notif-header">
+        <span class="notif-title">Notifications</span>
+        <button class="notif-clear-all" onclick="clearAllNotifications(event)">Clear All</button>
+      </div>
+      <div class="notif-list" id="notifList">
+        <div class="notif-empty">No notifications yet</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BACK TO TOP BUTTON ===== -->
+  <button id="backToTop" class="back-to-top" title="Back to top">↑</button>
+
+  <!-- ===== AI CHATBOT POPUP ===== -->
+  <div id="chatbot" class="chatbot-container hidden">
+    <div class="chatbot-header">
+      <span>🤖 NEXUS AI Assistant</span>
+      <button onclick="toggleChatbot()" class="chatbot-close">✕</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages">
+      <div class="chat-msg bot">Hello! I'm NEXUS AI. How can I help you today?</div>
+    </div>
+    <div class="chatbot-input-area">
+      <input type="text" id="chatInput" placeholder="Ask me anything..." />
+      <button onclick="sendChat()">➤</button>
+    </div>
+  </div>
+  <button id="chatbotToggle" class="chatbot-toggle" onclick="toggleChatbot()">🤖</button>
+
+  <!-- ===== DARK/LIGHT MODE TOGGLE ===== -->
+  <button id="themeToggle" class="theme-toggle" title="Toggle Theme">🌙</button>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav id="navbar" class="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">NEX<span>US</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero" class="nav-link active">Home</a></li>
+        <li><a href="#products" class="nav-link">Products</a></li>
+        <li><a href="#categories" class="nav-link">Categories</a></li>
+        <li><a href="#deals" class="nav-link">Deals</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-icons">
+        <button class="nav-icon-btn" onclick="openSearch()" title="Search">🔍</button>
+        <button class="nav-icon-btn" onclick="openWishlist()" title="Wishlist">
+          ♡ <span id="wishlistCount" class="badge">0</span>
+        </button>
+        <button class="nav-icon-btn" onclick="openCart()" title="Cart">
+          🛒 <span id="cartCount" class="badge">0</span>
+        </button>
+        <button class="nav-icon-btn" onclick="openAuth()" title="Login" id="loginBtn">👤 Login</button>
+      </div>
+      <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-close" onclick="toggleNav()">✕</button>
+    <ul>
+      <li><a href="#hero" onclick="toggleNav()">Home</a></li>
+      <li><a href="#products" onclick="toggleNav()">Products</a></li>
+      <li><a href="#categories" onclick="toggleNav()">Categories</a></li>
+      <li><a href="#deals" onclick="toggleNav()">Deals</a></li>
+      <li><a href="#contact" onclick="toggleNav()">Contact</a></li>
+      <li><a href="#" onclick="toggleNav(); openAuth()">Login / Sign Up</a></li>
+    </ul>
+  </div>
+
+  <!-- ===================== HERO SECTION ===================== -->
+  <section id="hero" class="hero-section">
+    <div class="hero-bg-mesh"></div>
+    <div class="hero-content">
+      <div class="hero-greeting" id="heroGreeting">Good Evening</div>
+      <h1 class="hero-title">
+        <span class="hero-line1">THE FUTURE</span>
+        <span class="hero-line2">OF <span class="type-text" id="typeText">SHOPPING</span></span>
+      </h1>
+      <p class="hero-sub">Experience next-generation commerce. Curated tech, premium design, delivered tomorrow.</p>
+      <div class="hero-btns">
+        <a href="#products" class="btn-primary">Explore Products</a>
+        <a href="#deals" class="btn-secondary">Flash Deals ⚡</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" data-target="12000">0</span><span>Products</span></div>
+        <div class="stat"><span class="stat-num" data-target="98">0</span><span>% Satisfaction</span></div>
+        <div class="stat"><span class="stat-num" data-target="500000">0</span><span>Customers</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-device-ring ring1"></div>
+      <div class="hero-device-ring ring2"></div>
+      <div class="hero-device-ring ring3"></div>
+      <div class="hero-float-card card-a">🎧 AirPods Pro Max<br><small>$549 → $419</small></div>
+      <div class="hero-float-card card-b">📱 Nexus Phone 15<br><small>Just Launched ✨</small></div>
+      <div class="hero-product-center">
+        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=280&h=280&fit=crop&auto=format" alt="Hero Product" class="hero-product-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SEARCH SECTION ===================== -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-box-wrap">
+      <div class="search-row">
+        <span class="search-icon-inside">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search for products, categories..." oninput="handleSearch()" onkeydown="searchKeydown(event)" />
+        <button class="voice-btn" title="Voice Search" onclick="voiceSearch()">🎙️</button>
+        <button class="close-search" onclick="closeSearch()">✕</button>
+      </div>
+      <div class="search-suggestions" id="searchSuggestions"></div>
+      <div class="recent-searches" id="recentSearches"></div>
+    </div>
+  </div>
+
+  <!-- ===================== CATEGORIES ===================== -->
+  <section id="categories" class="categories-section section">
+    <div class="section-header">
+      <h2 class="section-title">Browse <span>Categories</span></h2>
+      <p>Explore our world-class product universe</p>
+    </div>
+    <div class="categories-grid">
+      <div class="cat-card" onclick="filterByCategory('electronics')">
+        <div class="cat-icon">💻</div>
+        <div class="cat-name">Electronics</div>
+        <div class="cat-count">2,400+ items</div>
+        <div class="cat-glow"></div>
+      </div>
+      <div class="cat-card" onclick="filterByCategory('fashion')">
+        <div class="cat-icon">👗</div>
+        <div class="cat-name">Fashion</div>
+        <div class="cat-count">5,800+ items</div>
+        <div class="cat-glow"></div>
+      </div>
+      <div class="cat-card" onclick="filterByCategory('gaming')">
+        <div class="cat-icon">🎮</div>
+        <div class="cat-name">Gaming</div>
+        <div class="cat-count">1,200+ items</div>
+        <div class="cat-glow"></div>
+      </div>
+      <div class="cat-card" onclick="filterByCategory('accessories')">
+        <div class="cat-icon">⌚</div>
+        <div class="cat-name">Accessories</div>
+        <div class="cat-count">3,100+ items</div>
+        <div class="cat-glow"></div>
+      </div>
+      <div class="cat-card" onclick="filterByCategory('smart')">
+        <div class="cat-icon">🏠</div>
+        <div class="cat-name">Smart Devices</div>
+        <div class="cat-count">890+ items</div>
+        <div class="cat-glow"></div>
+      </div>
+      <div class="cat-card" onclick="filterByCategory('ai')">
+        <div class="cat-icon">🤖</div>
+        <div class="cat-name">AI Gadgets</div>
+        <div class="cat-count">340+ items</div>
+        <div class="cat-glow"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DEALS / FLASH SALE ===================== -->
+  <section id="deals" class="deals-section section">
+    <div class="deals-header">
+      <div>
+        <h2 class="section-title">⚡ Flash <span>Sale</span></h2>
+        <p>Limited time. Premium prices.</p>
+      </div>
+      <div class="countdown-wrap">
+        <div class="countdown-label">Ends in:</div>
+        <div class="countdown-timer">
+          <div class="time-block"><span id="cdHours">00</span><small>HRS</small></div>
+          <span class="colon">:</span>
+          <div class="time-block"><span id="cdMins">00</span><small>MIN</small></div>
+          <span class="colon">:</span>
+          <div class="time-block"><span id="cdSecs">00</span><small>SEC</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="products-grid" id="dealsGrid"></div>
+  </section>
+
+  <!-- ===================== PRODUCTS SECTION ===================== -->
+  <section id="products" class="products-section section">
+    <div class="section-header">
+      <h2 class="section-title">All <span>Products</span></h2>
+      <p>Discover our handpicked premium collection</p>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
+      <button class="filter-btn" onclick="filterProducts('electronics', this)">Electronics</button>
+      <button class="filter-btn" onclick="filterProducts('gaming', this)">Gaming</button>
+      <button class="filter-btn" onclick="filterProducts('accessories', this)">Accessories</button>
+      <button class="filter-btn" onclick="filterProducts('fashion', this)">Fashion</button>
+      <button class="filter-btn" onclick="filterProducts('smart', this)">Smart Devices</button>
+      <button class="filter-btn" onclick="filterProducts('ai', this)">AI Gadgets</button>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <!-- ===================== SMART RECOMMENDATIONS ===================== -->
+  <section class="recommendations-section section">
+    <div class="section-header">
+      <h2 class="section-title">🧠 Smart <span>Picks For You</span></h2>
+      <p>AI-powered recommendations based on your activity</p>
+    </div>
+    <div class="products-grid" id="recommendationsGrid"></div>
+  </section>
+
+  <!-- ===================== TRENDING PRODUCTS SLIDER ===================== -->
+  <section class="trending-section section">
+    <div class="section-header">
+      <h2 class="section-title">🔥 Trending <span>Now</span></h2>
+    </div>
+    <div class="slider-wrap">
+      <button class="slider-btn left" onclick="slideLeft()">‹</button>
+      <div class="trending-slider" id="trendingSlider"></div>
+      <button class="slider-btn right" onclick="slideRight()">›</button>
+    </div>
+  </section>
+
+  <!-- ===================== RECENTLY VIEWED ===================== -->
+  <section class="recent-view-section section" id="recentViewSection" style="display:none;">
+    <div class="section-header">
+      <h2 class="section-title">🕐 Recently <span>Viewed</span></h2>
+    </div>
+    <div class="products-grid" id="recentViewGrid"></div>
+  </section>
+
+  <!-- ===================== STATS COUNTER ===================== -->
+  <section class="stats-section section">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🌍</div>
+        <div class="stat-value" data-target="150">0</div>
+        <div class="stat-label">Countries Served</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📦</div>
+        <div class="stat-value" data-target="2000000">0</div>
+        <div class="stat-label">Orders Delivered</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⭐</div>
+        <div class="stat-value" data-target="4.9">0</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🚀</div>
+        <div class="stat-value" data-target="99">0</div>
+        <div class="stat-label">% On-Time Delivery</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BRANDS ===================== -->
+  <section class="brands-section section">
+    <div class="section-header">
+      <h2 class="section-title">Featured <span>Brands</span></h2>
+    </div>
+    <div class="brands-scroll">
+      <div class="brand-item">⚡ TESLA</div>
+      <div class="brand-item"> APPLE</div>
+      <div class="brand-item">◈ NEXUS</div>
+      <div class="brand-item">▲ ZENITH</div>
+      <div class="brand-item">◉ NOVA</div>
+      <div class="brand-item">⬡ PRISM</div>
+      <div class="brand-item">⚡ TESLA</div>
+      <div class="brand-item"> APPLE</div>
+      <div class="brand-item">◈ NEXUS</div>
+      <div class="brand-item">▲ ZENITH</div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section class="reviews-section section">
+    <div class="section-header">
+      <h2 class="section-title">What Customers <span>Say</span></h2>
+    </div>
+    <div class="reviews-slider" id="reviewsSlider">
+      <div class="review-card">
+        <div class="review-avatar">AK</div>
+        <div class="review-stars">★★★★★</div>
+        <p>"Absolutely insane quality. The packaging alone feels like a premium Apple unboxing experience. NEXUS is the future."</p>
+        <div class="review-name">Arjun Kapoor</div>
+        <div class="review-role">Tech Enthusiast, Mumbai</div>
+      </div>
+      <div class="review-card">
+        <div class="review-avatar">SR</div>
+        <div class="review-stars">★★★★★</div>
+        <p>"Delivery in 18 hours. The AI gadget I ordered works flawlessly. Absolutely no comparison to any other store online."</p>
+        <div class="review-name">Sofia Reyes</div>
+        <div class="review-role">Product Designer, Barcelona</div>
+      </div>
+      <div class="review-card">
+        <div class="review-avatar">JL</div>
+        <div class="review-stars">★★★★☆</div>
+        <p>"The UI of the website is more polished than most SaaS products I use. And the product lineup? Chef's kiss."</p>
+        <div class="review-name">James Liu</div>
+        <div class="review-role">Software Engineer, Singapore</div>
+      </div>
+      <div class="review-card">
+        <div class="review-avatar">MP</div>
+        <div class="review-stars">★★★★★</div>
+        <p>"Returned customer 7 times now. Each experience is seamless, premium, and feels tailored to me. NEXUS for life."</p>
+        <div class="review-name">Meera Pillai</div>
+        <div class="review-role">Architect, Bangalore</div>
+      </div>
+    </div>
+    <div class="slider-dots" id="reviewDots"></div>
+  </section>
+
+  <!-- ===================== FAQ SECTION ===================== -->
+  <section id="faq" class="faq-section section">
+    <div class="section-header">
+      <h2 class="section-title">Frequently <span>Asked</span></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is the delivery timeline? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">Standard delivery: 2–5 business days. Express delivery: next-day available in select cities. International orders: 7–14 business days with full tracking.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What is your return policy? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">30-day hassle-free returns on all items. No questions asked. Full refund processed within 3–5 business days once we receive the item.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Do you ship internationally? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">Yes! We ship to 150+ countries. International orders include full tracking and are insured automatically.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Is my payment information secure? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">Absolutely. We use 256-bit SSL encryption. We never store card details. All payments processed through certified gateways.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== NEWSLETTER ===================== -->
+  <section class="newsletter-section section">
+    <div class="newsletter-inner">
+      <h2>Join the <span>NEXUS</span> Universe</h2>
+      <p>Get exclusive drops, early access, and members-only deals straight to your inbox.</p>
+      <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+        <input type="email" id="newsletterEmail" placeholder="Enter your email address..." required />
+        <button type="submit" class="btn-primary">Subscribe ✨</button>
+      </form>
+      <div id="newsletterMsg" class="success-msg hidden"></div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT SECTION ===================== -->
+  <section id="contact" class="contact-section section">
+    <div class="section-header">
+      <h2 class="section-title">Get In <span>Touch</span></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-form-wrap">
+        <form class="contact-form" onsubmit="submitContact(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" id="contactName" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="contactEmail" placeholder="your@email.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" id="contactSubject" placeholder="What's this about?" required />
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea id="contactMsg" rows="5" placeholder="Tell us everything..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary full-width">Send Message 🚀</button>
+        </form>
+      </div>
+      <div class="contact-info">
+        <div class="contact-detail">
+          <span class="contact-icon">📍</span>
+          <div>
+            <strong>Address</strong>
+            <p>NEXUS HQ, Cyber Tower, Bangalore 560001, India</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-icon">📧</span>
+          <div>
+            <strong>Email</strong>
+            <p><a href="mailto:hello@nexusstore.io">hello@nexusstore.io</a></p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-icon">📞</span>
+          <div>
+            <strong>Phone</strong>
+            <p><a href="tel:+918001234567">+91 800-NEXUS-01</a></p>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://twitter.com" target="_blank" rel="noopener" class="social-link" title="Twitter/X">𝕏</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link" title="LinkedIn">in</a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="social-link" title="Instagram">ig</a>
+          <a href="https://youtube.com" target="_blank" rel="noopener" class="social-link" title="YouTube">yt</a>
+        </div>
+        <div class="map-placeholder">
+          <div class="map-inner">
+            <span>📡</span>
+            <p>Bangalore, India</p>
+            <small>NEXUS Global HQ</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">NEX<span>US</span></div>
+        <p>The most premium e-commerce experience ever built. Technology meets taste.</p>
+        <div class="social-links">
+          <a href="https://twitter.com" target="_blank" rel="noopener" class="social-link">𝕏</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link">in</a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="social-link">ig</a>
+          <a href="https://youtube.com" target="_blank" rel="noopener" class="social-link">yt</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#categories">Categories</a></li>
+          <li><a href="#deals">Deals</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#faq" onclick="smoothScrollTo('faq')">FAQ</a></li>
+          <li><a href="#contact" onclick="smoothScrollTo('contact')">Contact Us</a></li>
+          <li><a href="#" onclick="openTrackOrder(event)">Track Order</a></li>
+          <li><a href="#" onclick="openReturns(event)">Returns</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Policies</h4>
+        <ul>
+          <li><a href="#" onclick="openPolicy(event,'privacy')">Privacy Policy</a></li>
+          <li><a href="#" onclick="openPolicy(event,'terms')">Terms of Service</a></li>
+          <li><a href="#" onclick="openPolicy(event,'cookie')">Cookie Policy</a></li>
+          <li><a href="#" onclick="openPolicy(event,'refund')">Refund Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 NEXUS Commerce Inc. All rights reserved. Built with 💜 for the future.</p>
+    </div>
+  </footer>
+
+  <!-- ===================== CART SIDEBAR ===================== -->
+  <div class="sidebar-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="sidebar-header">
+      <h3>🛒 Your Cart</h3>
+      <button onclick="closeCart()" class="sidebar-close">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="empty-state">
+        <div class="empty-icon">🛒</div>
+        <p>Your cart is empty</p>
+        <a href="#products" onclick="closeCart()" class="btn-primary">Start Shopping</a>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-total-row"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+      <div class="cart-total-row"><span>Shipping</span><span class="free-text">FREE</span></div>
+      <div class="cart-total-row total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+      <button class="btn-primary full-width" onclick="openCheckout()">Checkout →</button>
+      <button class="btn-secondary full-width" onclick="clearCart()">Clear Cart</button>
+    </div>
+  </div>
+
+  <!-- ===================== WISHLIST SIDEBAR ===================== -->
+  <div class="sidebar-overlay" id="wishlistOverlay" onclick="closeWishlist()"></div>
+  <div class="cart-sidebar" id="wishlistSidebar">
+    <div class="sidebar-header">
+      <h3>♡ Wishlist</h3>
+      <button onclick="closeWishlist()" class="sidebar-close">✕</button>
+    </div>
+    <div class="cart-items" id="wishlistItems">
+      <div class="empty-state">
+        <div class="empty-icon">♡</div>
+        <p>Your wishlist is empty</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== QUICK VIEW MODAL ===================== -->
+  <div class="modal-overlay" id="quickViewOverlay" onclick="closeQuickView()"></div>
+  <div class="modal" id="quickViewModal">
+    <button class="modal-close" onclick="closeQuickView()">✕</button>
+    <div class="modal-content" id="quickViewContent"></div>
+  </div>
+
+  <!-- ===================== AUTH MODAL ===================== -->
+  <div class="modal-overlay" id="authOverlay" onclick="closeAuth()"></div>
+  <div class="modal auth-modal" id="authModal">
+    <button class="modal-close" onclick="closeAuth()">✕</button>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="loginTab" onclick="switchAuth('login')">Login</button>
+      <button class="auth-tab" id="signupTab" onclick="switchAuth('signup')">Sign Up</button>
+    </div>
+    <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+      <h3>Welcome Back 👋</h3>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="your@email.com" required />
+      </div>
+      <div class="form-group pass-group">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="••••••••" required />
+        <button type="button" class="show-pass" onclick="togglePass('loginPass')">👁</button>
+      </div>
+      <div class="form-row-inline">
+        <label class="remember-me"><input type="checkbox" id="rememberMe" /> Remember me</label>
+        <a href="#" onclick="switchAuth('forgot')" class="forgot-link">Forgot password?</a>
+      </div>
+      <button type="submit" class="btn-primary full-width">Login →</button>
+      <p class="auth-switch">New here? <a href="#" onclick="switchAuth('signup')">Create account</a></p>
+    </form>
+    <form id="signupForm" class="auth-form hidden" onsubmit="handleSignup(event)">
+      <h3>Create Account 🚀</h3>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="signupName" placeholder="Your full name" required />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="signupEmail" placeholder="your@email.com" required />
+      </div>
+      <div class="form-group pass-group">
+        <label>Password</label>
+        <input type="password" id="signupPass" placeholder="••••••••" minlength="6" required />
+        <button type="button" class="show-pass" onclick="togglePass('signupPass')">👁</button>
+      </div>
+      <div class="form-group pass-group">
+        <label>Confirm Password</label>
+        <input type="password" id="signupConfirm" placeholder="••••••••" required />
+        <button type="button" class="show-pass" onclick="togglePass('signupConfirm')">👁</button>
+      </div>
+      <button type="submit" class="btn-primary full-width">Create Account →</button>
+      <p class="auth-switch">Already have an account? <a href="#" onclick="switchAuth('login')">Login</a></p>
+    </form>
+    <form id="forgotForm" class="auth-form hidden" onsubmit="handleForgot(event)">
+      <h3>Reset Password 🔑</h3>
+      <p>Enter your email and we'll send a reset link.</p>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="forgotEmail" placeholder="your@email.com" required />
+      </div>
+      <button type="submit" class="btn-primary full-width">Send Reset Link →</button>
+      <p class="auth-switch"><a href="#" onclick="switchAuth('login')">← Back to Login</a></p>
+    </form>
+  </div>
+
+  <!-- ===================== CHECKOUT MODAL ===================== -->
+  <div class="modal-overlay" id="checkoutOverlay" onclick="closeCheckout()"></div>
+  <div class="modal checkout-modal" id="checkoutModal">
+    <button class="modal-close" onclick="closeCheckout()">✕</button>
+    <h2>Secure Checkout 🔒</h2>
+    <div class="pay-tabs">
+      <button class="pay-tab active" onclick="switchPayment('card', this)">💳 Card</button>
+      <button class="pay-tab" onclick="switchPayment('upi', this)">📱 UPI</button>
+      <button class="pay-tab" onclick="switchPayment('netbank', this)">🏦 Net Banking</button>
+    </div>
+    <form id="cardForm" class="pay-form" onsubmit="processPayment(event)">
+      <div class="order-summary-mini" id="orderSummaryMini"></div>
+      <div class="form-group">
+        <label>Cardholder Name</label>
+        <input type="text" id="cardName" placeholder="Name as on card" required />
+      </div>
+      <div class="form-group card-number-group">
+        <label>Card Number</label>
+        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)" required />
+        <span class="card-type-badge" id="cardTypeBadge">💳</span>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Expiry Date</label>
+          <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)" required />
+        </div>
+        <div class="form-group">
+          <label>CVV</label>
+          <input type="password" id="cardCvv" placeholder="•••" maxlength="4" required />
+        </div>
+      </div>
+      <button type="submit" class="btn-primary full-width pay-btn">Pay Now 🔐</button>
+    </form>
+    <div id="upiForm" class="pay-form hidden">
+      <div class="order-summary-mini" id="orderSummaryUpi"></div>
+      <div class="form-group">
+        <label>UPI ID</label>
+        <input type="text" id="upiId" placeholder="yourname@upi" />
+      </div>
+      <div class="upi-apps">
+        <div class="upi-app" onclick="selectUpi(this)">GPay</div>
+        <div class="upi-app" onclick="selectUpi(this)">PhonePe</div>
+        <div class="upi-app" onclick="selectUpi(this)">Paytm</div>
+        <div class="upi-app" onclick="selectUpi(this)">BHIM</div>
+      </div>
+      <button type="button" class="btn-primary full-width pay-btn" onclick="processPayment(null, 'upi')">Pay via UPI 📱</button>
+    </div>
+    <div id="netbankForm" class="pay-form hidden">
+      <div class="order-summary-mini" id="orderSummaryNet"></div>
+      <div class="form-group">
+        <label>Select Bank</label>
+        <select id="bankSelect">
+          <option value="">-- Choose your bank --</option>
+          <option>State Bank of India</option>
+          <option>HDFC Bank</option>
+          <option>ICICI Bank</option>
+          <option>Axis Bank</option>
+          <option>Kotak Mahindra</option>
+          <option>Other Bank</option>
+        </select>
+      </div>
+      <button type="button" class="btn-primary full-width pay-btn" onclick="processPayment(null, 'netbank')">Proceed to Bank →</button>
+    </div>
+    <div id="paymentProcessing" class="pay-processing hidden">
+      <div class="processing-spinner"></div>
+      <p>Processing your payment securely...</p>
+      <div class="processing-steps">
+        <div class="proc-step" id="proc1">🔐 Encrypting data...</div>
+        <div class="proc-step" id="proc2">🏦 Contacting bank...</div>
+        <div class="proc-step" id="proc3">✅ Confirming order...</div>
+      </div>
+    </div>
+    <div id="paymentSuccess" class="pay-success hidden">
+      <div class="success-anim">✅</div>
+      <h3>Payment Successful!</h3>
+      <p>Your order has been placed. Order ID: <strong id="orderId"></strong></p>
+      <p>You'll receive a confirmation email shortly.</p>
+      <button class="btn-primary" onclick="closeCheckout(); clearCart()">Continue Shopping →</button>
+    </div>
+  </div>
+
+  <!-- ===================== POLICY MODAL ===================== -->
+  <div class="modal-overlay" id="policyOverlay" onclick="closePolicy()"></div>
+  <div class="modal policy-modal" id="policyModal">
+    <button class="modal-close" onclick="closePolicy()">✕</button>
+    <div id="policyContent"></div>
+  </div>
+
+  <!-- ===================== TRACK ORDER MODAL ===================== -->
+  <div class="modal-overlay" id="trackOverlay" onclick="closeTrackOrder()"></div>
+  <div class="modal track-modal" id="trackModal">
+    <button class="modal-close" onclick="closeTrackOrder()">✕</button>
+    <h2>📦 Track Your Order</h2>
+    <div class="form-group" style="margin-top:1.5rem;">
+      <label>Order ID</label>
+      <input type="text" id="trackOrderId" placeholder="Enter order ID (e.g. NX-ABC123)" />
+    </div>
+    <button class="btn-primary full-width" style="margin-top:1rem;" onclick="trackOrderLookup()">Track Now →</button>
+    <div id="trackResult" class="track-result hidden"></div>
+  </div>
+
+  <!-- ===================== TOAST NOTIFICATIONS ===================== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ===================== ORDER SUCCESS MODAL ===================== -->
+  <div class="modal-overlay" id="orderSuccessOverlay" style="display:none;"></div>
+  <div class="modal order-success-modal" id="orderSuccessModal" style="display:none;">
+    <div class="success-anim">🎉</div>
+    <h2>Order Placed!</h2>
+    <p>Your NEXUS experience is on the way.</p>
+    <button class="btn-primary" onclick="document.getElementById('orderSuccessOverlay').style.display='none';document.getElementById('orderSuccessModal').style.display='none';">Continue Shopping</button>
+  </div>
+
+  <script src="script1.js"></script>
+</body>
+</html>
