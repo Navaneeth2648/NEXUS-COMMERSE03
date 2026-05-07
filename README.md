@@ -1,6 +1,8 @@
-# 🛒 ShopHub — E-Commerce Website
+# ⚡ NEXUS — Future Commerce
 
-A full-featured e-commerce web application built for seamless online shopping experiences. Browse products, manage a cart, place orders, and handle payments — all in one place.
+> **The most premium e-commerce experience ever built. Technology meets taste.**
+
+🌐 **Live Demo:** [nexus-commerse-03-p6fv.vercel.app](https://nexus-commerse-03-p6fv.vercel.app/)
 
 ---
 
@@ -8,11 +10,11 @@ A full-featured e-commerce web application built for seamless online shopping ex
 
 - [About the Project](#about-the-project)
 - [Features](#features)
+- [Pages & Sections](#pages--sections)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [Folder Structure](#folder-structure)
-- [Environment Variables](#environment-variables)
-- [Screenshots](#screenshots)
+- [Contact Info](#-contact-info)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -20,43 +22,80 @@ A full-featured e-commerce web application built for seamless online shopping ex
 
 ## 📖 About the Project
 
-**ShopHub** is a modern e-commerce platform that allows users to browse products by category, add items to their cart, and complete secure checkout with payment integration. Admins can manage products, orders, and users through a dedicated dashboard.
+**NEXUS** is a next-generation e-commerce platform with a futuristic design. It offers a premium shopping experience with AI-powered recommendations, real-time flash deals, multi-method checkout, and a sleek dark/light mode UI.
+
+Built and deployed on **Vercel**, NEXUS supports everything from browsing curated tech products to completing secure payments via Card, UPI, or Net Banking.
 
 ---
 
 ## ✨ Features
 
-### 👤 User
-- User registration, login & logout
-- Browse and search products
-- Filter by category, price, and rating
-- Product detail pages with image gallery
-- Add to cart / wishlist
-- Secure checkout with payment gateway
-- Order history and tracking
-- Responsive design (mobile-friendly)
+### 🛍️ Shopping Experience
+- Browse products across **7 categories**: Electronics, Fashion, Gaming, Accessories, Smart Devices, AI Gadgets
+- **Search & filter** products by category
+- **Wishlist** — save favourite items
+- **Recently Viewed** products tracking
+- **Trending Now** carousel
+- Flash Sale with live **countdown timer** ⚡
 
-### 🛠️ Admin
-- Admin dashboard with sales overview
-- Add, edit, and delete products
-- Manage orders and update order status
-- Manage users and roles
+### 🤖 AI-Powered
+- **NEXUS AI Assistant** — built-in chatbot for shopping help
+- **Smart Picks** — AI-powered personalized product recommendations
+
+### 🛒 Cart & Checkout
+- Add/remove items with live subtotal
+- **Multi-method secure checkout:**
+  - 💳 Credit/Debit Card (256-bit SSL encrypted)
+  - 📱 UPI (GPay, PhonePe, Paytm, BHIM)
+  - 🏦 Net Banking (SBI, HDFC, ICICI, Axis, Kotak & more)
+- Animated payment processing flow
+- Order confirmation with unique **Order ID**
+- **Order Tracking** by Order ID
+
+### 👤 User Accounts
+- Login / Sign Up via modal
+- Password visibility toggle
+- Forgot password / reset link flow
+- "Remember me" option
+
+### 🔔 Notifications
+- In-app notification bell with unread counter
+- Clear all notifications
+
+### 📣 Other Highlights
+- **Newsletter subscription**
+- **Contact form** (Name, Email, Subject, Message)
+- **FAQ accordion** — Delivery, Returns, International Shipping, Payment Security
+- **Featured Brands**: Tesla, Apple, NEXUS, Zenith, Nova, Prism
+- **Customer Reviews** with star ratings
+- 🌙 Dark / Light **theme toggle**
+- Fully **responsive** — mobile + desktop
+
+---
+
+## 📄 Pages & Sections
+
+| Section | Description |
+|---------|-------------|
+| `#hero` | Hero banner with tagline, live stats, and featured products |
+| `#categories` | Browse by 7 product categories |
+| `#deals` | Flash Sale with countdown timer |
+| `#products` | Full product grid with filter tabs |
+| `#contact` | Contact form, HQ address, and social links |
+| `#faq` | Frequently asked questions accordion |
 
 ---
 
 ## 🧰 Tech Stack
 
-| Layer        | Technology                          |
-|-------------|--------------------------------------|
-| Frontend     | HTML, CSS, JavaScript / React.js    |
-| Backend      | Node.js / Express.js                |
-| Database     | MongoDB / MySQL                     |
-| Auth         | JWT (JSON Web Tokens)               |
-| Payments     | Razorpay / Stripe                   |
-| Storage      | Cloudinary (product images)         |
-| Deployment   | Vercel / Heroku / AWS               |
-
-> Update this table to match your actual tech stack.
+| Layer | Technology |
+|-------|------------|
+| Frontend | HTML5, CSS3, Vanilla JavaScript |
+| Hosting | Vercel |
+| Images | Unsplash API |
+| Payment UI | Custom Card / UPI / Net Banking forms |
+| AI Chatbot | Custom NEXUS AI Assistant interface |
+| Theme | Dark / Light mode via CSS variables |
 
 ---
 
@@ -64,110 +103,87 @@ A full-featured e-commerce web application built for seamless online shopping ex
 
 ### Prerequisites
 
-Make sure you have the following installed:
+- A modern browser (Chrome, Firefox, Edge)
+- [Git](https://git-scm.com/)
 
-- [Node.js](https://nodejs.org/) (v18+)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-- [MongoDB](https://www.mongodb.com/) or your preferred database
-
-### Installation
+### Run Locally
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/shophub.git
-   cd shophub
+   git clone https://github.com/your-username/nexus-commerce.git
+   cd nexus-commerce
    ```
 
-2. **Install dependencies**
+2. **Open directly in browser**
    ```bash
-   npm install
+   # Option 1: Open index.html directly
+   open index.html
+
+   # Option 2: Use a local dev server (recommended)
+   npx serve .
    ```
 
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-   Fill in your values in the `.env` file (see [Environment Variables](#environment-variables)).
+3. Visit `http://localhost:3000`
 
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
+### Deploy to Vercel
 
-5. Open [https://nexus-commerse-03-p6fv.vercel.app/) in your browser.
+```bash
+npm install -g vercel
+vercel
+```
 
 ---
 
 ## 📁 Folder Structure
 
 ```
-shophub/
-├── public/             # Static assets (images, icons)
-├── src/
-│   ├── components/     # Reusable UI components
-│   ├── pages/          # Page-level components / routes
-│   ├── context/        # Global state (Cart, Auth)
-│   ├── services/       # API calls
-│   ├── utils/          # Helper functions
-│   └── styles/         # Global CSS / Tailwind config
-├── server/
-│   ├── controllers/    # Route handlers
-│   ├── models/         # Database schemas
-│   ├── routes/         # API routes
-│   └── middleware/     # Auth, error handling
-├── .env.example
-├── package.json
+nexus-commerce/
+├── index.html        # Main single-page app
+├── style.css         # All styles, animations, dark/light theme
+├── script.js         # Cart, wishlist, modals, AI assistant, checkout
+├── assets/
+│   └── images/       # Product and banner images
 └── README.md
 ```
 
 ---
 
-## 🔐 Environment Variables
+## 🌍 Contact Info
 
-Create a `.env` file in the root directory with the following keys:
+| | Details |
+|-|---------|
+| 📍 Address | NEXUS HQ, Cyber Tower, Bangalore 560001, India |
+| 📧 Email | hello@nexusstore.io |
+| 📞 Phone | +91 800-NEXUS-01 |
+| 🌐 Socials | [Twitter/X](https://twitter.com) · [LinkedIn](https://linkedin.com) · [Instagram](https://instagram.com) · [YouTube](https://youtube.com) |
 
-```env
-# Server
-PORT=5000
-NODE_ENV=development
+---
 
-# Database
-MONGO_URI=your_mongodb_connection_string
+## 📦 Policies
 
-# Authentication
-JWT_SECRET=your_jwt_secret_key
-JWT_EXPIRES_IN=7d
-
-# Payment Gateway (Razorpay / Stripe)
-RAZORPAY_KEY_ID=your_razorpay_key
-RAZORPAY_KEY_SECRET=your_razorpay_secret
-
-# Cloudinary (Image Upload)
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-```
+- ✅ 30-day hassle-free returns — no questions asked
+- 🚚 Ships to 150+ countries with full tracking
+- 🔐 256-bit SSL encrypted payments
+- ⚡ Express next-day delivery available in select cities
 
 ---
 
 ## 📸 Screenshots
 
-> Add screenshots of your app here.
+> Add screenshots or a screen recording GIF of your live site here.
 
-| Home Page | Product Page | Cart | Admin Dashboard |
-|-----------|-------------|------|-----------------|
-| ![home](#) | ![product](#) | ![cart](#) | ![admin](#) |
+| Home | Products | Checkout |
+|------|----------|----------|
+| ![home](#) | ![products](#) | ![checkout](#) |
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Follow these steps:
-
 1. Fork the repository
-2. Create a new branch: `git checkout -b feature/your-feature`
+2. Create your branch: `git checkout -b feature/your-feature`
 3. Commit your changes: `git commit -m "Add your feature"`
-4. Push to the branch: `git push origin feature/your-feature`
+4. Push to branch: `git push origin feature/your-feature`
 5. Open a Pull Request
 
 ---
@@ -178,12 +194,10 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 📬 Contact
+<div align="center">
 
-Made with ❤️ by **navneeth**
-- GitHub: [@Navaneeth2648](https://github.com/@Navaneeth2648)
-- Email: your-email@example.com
+Built with 💜 for the future &nbsp;|&nbsp; © 2026 NEXUS Commerce Inc.
 
----
+⭐ **Star this repo if you like it!**
 
-> ⭐ If you found this project helpful, consider giving it a star on GitHub!
+</div>
