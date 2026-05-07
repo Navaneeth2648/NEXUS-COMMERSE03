@@ -123,7 +123,7 @@ Built and deployed on **Vercel**, NEXUS supports everything from browsing curate
    npx serve .
    ```
 
-3. Visit `http://localhost:3000`
+3. Visit `https://nexus-commerse-03-p6fv.vercel.app/`
 
 ### Deploy to Vercel
 
